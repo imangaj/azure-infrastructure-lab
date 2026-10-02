@@ -10,11 +10,11 @@ Prepare the learning environment before starting technical Azure tickets.
 - [x] Create GitHub repository
 - [x] Set up GitHub Desktop
 - [x] Set up VS Code
-- [ ] Create repository structure
-- [ ] Create ticket template
-- [ ] Create recall card template
-- [ ] Create learning backlog
-- [ ] Complete company onboarding
+- [x] Create repository structure
+- [x] Create recall card template
+- [x] Create ticket template
+- [x] Create learning backlog
+- [x] Complete company onboarding
 
 ### Status
-In Progress
+completed
