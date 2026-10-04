@@ -67,18 +67,29 @@ What do I currently think?
 
 Possible solutions or causes:
 
-- FACT
-we need to vm on for aplication and one for database
-- FACT 
-db most not dirctly accessible from public internt 
-- FACT
-in future we may need an extra vm for application
-- PROPOSAL
-we need somthing like swich and router in azure to ba able to connect servers and also connct clinet to application
-- PROPOSAL 
+### FACT
+   we need to vm on for aplication and one for database
+### FACT 
+   db most not dirctly accessible from public internt 
+### FACT
+   in future we may need an extra vm for application
+### PROPOSAL
+   we need somthing like swich and router in azure to ba able to connect servers and also connct clinet to application
+### PROPOSAL 
 we need to seprate the db and applicaton server 
+### PROPOSAL
+   - One VNet
+   - Separate Web and Database subnets
+   - Private IP for DB01
+   - Non-overlapping address space
+   - NSG rules allowing only required Web-to-Database traffic
+   - No direct public exposure for the database
+### PROPOSAL
 
-
+   - Do not assign a public IP directly to WEB01 at this stage.
+   - First confirm whether employees need corporate-only access or Internet access.
+   - If public HTTPS access is required, consider Azure Application Gateway as the controlled web entry point.
+   - Keep DB01 private and accessible only from the Web tier on the required database port.
 ---
 
 ## 5. Missing Information
@@ -91,16 +102,14 @@ What information do I need before proceeding?
 - What database technology is being used?
 - Is hybrid connectivity with the on-premises network planned in this phase?
 - How many additional servers are expected in the future?
-
+- Do employees access the application only from the corporate network, or over the Internet?
+- Is HTTPS required?
+- Is web application firewall protection required?
 ---
 
 ## 6. Knowledge Blockers
 
 What do I need to understand before I can continue?
-- I need to understand how VNets and subnets work then how they work in azure.
-- I need to understand public IP vs private IP.
-- I need to understand how traffic can be restricted between subnets.
-- I need to understand basic CIDR/address planning so I can choose a non-overlapping Azure address range.
 - i need to undrestand what is hybrid and how to devleop a slution to connect on-premises to azure cloude.
 
 ---
