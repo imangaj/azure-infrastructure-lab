@@ -104,13 +104,15 @@ What do I need to understand before I can continue?
 ## 7. Investigation / Research
 
 ## 8. Proposed Solution
-   the user will request to web applicaton throw enternet with https and the application gateway will control it and send it to web 01 in order to access data web server connect throw tcp port 1433 to db server 
-      ### Network
-         one vnet: 10.20.0.0/16
-           subents:
-            1. Application Gateway subnet: 10.20.0.0/24
-            2. web subnet 10.20.1.0/24
-            3. database subnet 10.20.2.0/24
+   Employees access the web application over the Internet using HTTPS.
+   Traffic first reaches Azure Application Gateway, which forwards approved web traffic to WEB01.
+   WEB01 communicates with DB01 over TCP port 1433 when database access is required.
+        VNet: 10.20.0.0/16
+
+         10.20.0.0/24  -> Application Gateway subnet
+         10.20.1.0/24  -> Web subnet
+         10.20.2.0/24  -> Database subnet
+         10.20.3.0/26  -> AzureBastionSubnet
          
       ### Web Access
          Employees access the application from the Internet using HTTPS.
@@ -123,7 +125,9 @@ What do I need to understand before I can continue?
          Unnecessary Web-to-Database traffic is denied.
       ### Security
           public internt access with application gatway(HTTPS alowed)
-          all traffic except port mentioned is denied for db subnet
+          Unnecessary application traffic from the Web subnet to the Database subnet is denied.
+          Azure Bastion provides secure administrative access to Azure VMs over RDP or SSH without requiring public IP addresses on the VMs.
+          Administrators connect to Azure Bastion, and Bastion then connects privately to the target VM inside the VNet.
       ### Future Scalability
           Additional web servers can later be added to the Web subnet
           and registered as Application Gateway backend targets without
