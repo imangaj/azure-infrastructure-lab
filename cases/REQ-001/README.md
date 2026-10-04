@@ -90,37 +90,43 @@ we need to seprate the db and applicaton server
    - First confirm whether employees need corporate-only access or Internet access.
    - If public HTTPS access is required, consider Azure Application Gateway as the controlled web entry point.
    - Keep DB01 private and accessible only from the Web tier on the required database port.
-   ## 8. Proposed Solution
-
-      ### Network
-         one vnet: 10.20.0.0/16
-           subents:
-            1. web subnet 10.20.1.0/24
-            2. database subnet 10.20.2.0/24
-         
-      ### Web Access
-        public internet access
-      ### Database Access
-         just form applicaton subnet with port tcp 1433
-      ### Security
-          public internt access with application gatway(HTTPS alowed)
-          all traffic except port mentioned is denied for db subnet
-      ### Future Scalability
-      for aplicaton it grow from 1 to several
-      for db just one is required
----
+   
 
 ## 5. Missing Information
 
 What information do I need before proceeding?
-- How many additional servers are expected in the future?
 
-- Is web application firewall protection required?
 ---
 
 ## 6. Knowledge Blockers
 
 What do I need to understand before I can continue?
+## 7. Investigation / Research
 
-
+## 8. Proposed Solution
+   the user will request to web applicaton throw enternet with https and the application gateway will control it and send it to web 01 in order to access data web server connect throw tcp port 1433 to db server 
+      ### Network
+         one vnet: 10.20.0.0/16
+           subents:
+            1. Application Gateway subnet: 10.20.0.0/24
+            2. web subnet 10.20.1.0/24
+            3. database subnet 10.20.2.0/24
+         
+      ### Web Access
+         Employees access the application from the Internet using HTTPS.
+         Internet traffic reaches Azure Application Gateway first.
+         Application Gateway forwards approved web traffic to the web tier.
+         WEB01 does not require a directly assigned public IP.
+      ### Database Access
+         DB01 uses a private IP and has no public IP.
+         TCP 1433 is allowed from the Web subnet to the Database subnet.
+         Unnecessary Web-to-Database traffic is denied.
+      ### Security
+          public internt access with application gatway(HTTPS alowed)
+          all traffic except port mentioned is denied for db subnet
+      ### Future Scalability
+          Additional web servers can later be added to the Web subnet
+          and registered as Application Gateway backend targets without
+          redesigning the database subnet.
+---
 ---
