@@ -90,26 +90,37 @@ we need to seprate the db and applicaton server
    - First confirm whether employees need corporate-only access or Internet access.
    - If public HTTPS access is required, consider Azure Application Gateway as the controlled web entry point.
    - Keep DB01 private and accessible only from the Web tier on the required database port.
+   ## 8. Proposed Solution
+
+      ### Network
+         one vnet: 10.20.0.0/16
+           subents:
+            1. web subnet 10.20.1.0/24
+            2. database subnet 10.20.2.0/24
+         
+      ### Web Access
+        public internet access
+      ### Database Access
+         just form applicaton subnet with port tcp 1433
+      ### Security
+          public internt access with application gatway(HTTPS alowed)
+          all traffic except port mentioned is denied for db subnet
+      ### Future Scalability
+      for aplicaton it grow from 1 to several
+      for db just one is required
 ---
 
 ## 5. Missing Information
 
 What information do I need before proceeding?
-
-- How will employees access the web application?
-- Is Internet access required, or only access from the corporate network?
-- Which ports does the web server need to use to communicate with the database server?
-- What database technology is being used?
-- Is hybrid connectivity with the on-premises network planned in this phase?
 - How many additional servers are expected in the future?
-- Do employees access the application only from the corporate network, or over the Internet?
-- Is HTTPS required?
+
 - Is web application firewall protection required?
 ---
 
 ## 6. Knowledge Blockers
 
 What do I need to understand before I can continue?
-- i need to undrestand what is hybrid and how to devleop a slution to connect on-premises to azure cloude.
+
 
 ---
