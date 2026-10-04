@@ -114,23 +114,32 @@ What do I need to understand before I can continue?
          10.20.2.0/24  -> Database subnet
          10.20.3.0/26  -> AzureBastionSubnet
          
-      ### Web Access
+   ### Web Access
          Employees access the application from the Internet using HTTPS.
          Internet traffic reaches Azure Application Gateway first.
          Application Gateway forwards approved web traffic to the web tier.
          WEB01 does not require a directly assigned public IP.
-      ### Database Access
+   ### Database Access
          DB01 uses a private IP and has no public IP.
          TCP 1433 is allowed from the Web subnet to the Database subnet.
          Unnecessary Web-to-Database traffic is denied.
-      ### Security
-          public internt access with application gatway(HTTPS alowed)
-          Unnecessary application traffic from the Web subnet to the Database subnet is denied.
-          Azure Bastion provides secure administrative access to Azure VMs over RDP or SSH without requiring public IP addresses on the VMs.
-          Administrators connect to Azure Bastion, and Bastion then connects privately to the target VM inside the VNet.
-      ### Future Scalability
-          Additional web servers can later be added to the Web subnet
-          and registered as Application Gateway backend targets without
-          redesigning the database subnet.
+   ### Administrative Access
+      - Use Azure Bastion for administrative access to WEB01 and DB01.
+      - WEB01 and DB01 do not require public IP addresses for RDP or SSH access.
+      - Administrators connect through Azure Bastion, which reaches the VMs over the private VNet.
+      - Create a dedicated subnet named `AzureBastionSubnet`.
+      - Use `10.20.3.0/26` for the Bastion subnet.
+
+   ### Security
+      - Internet users access the application through Application Gateway over HTTPS.
+      - WEB01 has no directly assigned public IP.
+      - DB01 has no public IP.
+      - TCP 1433 is allowed from the Web subnet to the Database subnet.
+      - Unnecessary application traffic between the Web and Database tiers is denied.
+      - Administrative RDP/SSH access is provided through Azure Bastion instead of direct public access.
+   ### Future Scalability
+       Additional web servers can later be added to the Web subnet
+       and registered as Application Gateway backend targets without
+       redesigning the database subnet.
 ---
 ---
