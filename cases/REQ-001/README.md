@@ -101,6 +101,7 @@ What information do I need before proceeding?
 ## 6. Knowledge Blockers
 
 What do I need to understand before I can continue?
+
 ## 7. Investigation / Research
 
 ## 8. Proposed Solution
